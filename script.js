@@ -314,26 +314,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Start vuurwerk dat blijft exploderen
         startFireworks();
         
-        // Speel een geluidje (optioneel - browser kan dit blokkeren)
-        try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 523.25; // C5
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        } catch(e) {
-            // Geluid niet beschikbaar, geen probleem
-        }
+        // Speel vuurwerk geluid constant (loopt door na Ja)
+        const fireworkSound = new Audio('assets/Firework Sound Effect.mp3');
+        fireworkSound.volume = 0.6;
+        fireworkSound.loop = true;
+        fireworkSound.play().catch(function() {});
     });
 
     // Muisbeweging event listener (alleen na "Ja" klik)
